@@ -1,0 +1,16 @@
+{
+  "name": "practice_dafeng",
+  "version": "0.0.0",
+  "homepage": "https://github.com/pvtech/practice_dafeng",
+  "authors": [
+    "Alex Feng <da.feng@nyu.edu>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

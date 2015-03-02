@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        document.addEventListener('DOMContentLoaded',function(){
+            var children = document.body.childNodes;
+            var len = children.length;
+            console.log(len);
+
+            console.log('list nodes:');
+            for(var i = 0; i < len;i++){
+                console.log(children[i].nodeType);
+            }
+
+            console.log('list children:');
+
+            var childrenElem = document.body.children;
+            console.log(childrenElem.length);
+            console.log(childrenElem[0].tagName);
+        });
+    </script>
+</head>
+<body>
+    <!--text-->
+    <![CDATA[
+        console.log();
+    ]]>
+    <script></script>
+</body>
+</html>

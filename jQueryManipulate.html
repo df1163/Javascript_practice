@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        div {
+            border: 20px solid blue;
+        }
+        p {
+            background: yellow;
+            margin: 4px;
+        }
+
+        #container{
+            border: 2px inset red;
+        }
+
+        #container > div{
+            border: 2px inset red;
+        }
+    </style>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script>
+        $(function () {
+            var pTags = $( "p" );
+            $( "button" ).click(function() {
+                if ( pTags.parent().is( "div" ) ) {
+                    pTags.unwrap();
+                } else {
+                    pTags.wrap( "<div></div>" );
+                }
+            });
+
+            $('#container').wrap('<div></div>');
+        });
+    </script>
+</head>
+<body>
+    <button>wrap/unwrap</button>
+    <p>Hello</p>
+    <p>cruel</p>
+    <p>World</p>
+
+    <div id="container">
+        This is a Div
+        <div>div1</div>
+        <div>div2</div>
+        <div>div3</div>
+    </div>
+</body>
+</html>

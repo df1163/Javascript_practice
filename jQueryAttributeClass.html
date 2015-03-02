@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        div{
+            font: 'Arial', sans-serif;
+            border: 2px solid;
+            width: 40%;
+        }
+
+        .style1{
+            font: 'italic', sans-serif;
+            border: 2px solid yellow;
+            width: 80%;
+
+        }
+
+        .imgClass {
+            display: inline;
+            width: 600px;
+            height: 400px;
+        }
+    </style>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script>
+        $(function () {
+            /*
+            $('#id1').addClass('style1');
+
+            console.log('id2 has class: ' + $('#id2').hasClass('style1'));
+
+            $('#id2').addClass('style1');
+
+            console.log('div2 has class: ' + $('#id2').hasClass('style1'));
+
+            $('#id2').removeClass('style1');
+
+            console.log('div2 has class: ' + $('#id2').hasClass('style1'));
+
+            $('#id1').removeClass('style1');
+
+            $('div').toggleClass('style1');
+
+            console.log($('#id1').prop('id'));
+
+            console.log($('.div1').attr('class'));
+            */
+            $('#photo1').attr('src','image1.jpg');
+
+            $('#photo2').attr({
+                src:'image2.jpg',
+                class:'imgClass'
+            });
+
+            /* tried multiple selectors;
+               : and div must have space between;
+               not with another selector inside
+            *  */
+            $( "div:has('span'):not([id])" )
+                    .attr( "id", function( arr ) {
+                        console.log('arr: ' + arr);
+                        return "div-id" + arr;
+                    })
+                    .each(function() {
+                        $( "span", this ).html( "(id = '<b>" + this.id + "</b>')" );
+                    });
+            });
+
+        console.log($( "#single" ).val( "Single2" ));
+        $( "#multiple" ).val([ "Multiple2", "Multiple3" ]);
+        $( "input").val([ "check1", "check2", "radio1" ]);
+
+        function displayVals() {
+            var singleValues = $( "#single" ).val();
+            var multipleValues = $( "#multiple" ).val() || [];
+            $( "p" ).html( "<b>Single:</b> " + singleValues +
+            " <b>Multiple:</b> " + multipleValues.join( ", " ) );
+        }
+
+        $( "select" ).change( displayVals );
+        displayVals();
+
+        $( "ul li:nth-last-of-type(2)" ).append( "<span> - 2nd to last!</span>" );
+        /*$('ul li:nth-last-of-type(2)').append('<span> - 2nd to last</span>')*/
+    </script>
+</head>
+<body>
+    <p></p>
+
+    <select id="single">
+        <option>Single</option>
+        <option>Single2</option>
+    </select>
+    <select id="multiple" multiple="multiple">
+        <option selected="selected">Multiple</option>
+        <option>Multiple2</option>
+        <option selected="selected">Multiple3</option>
+    </select>
+
+    <div>Zero-th <span></span></div>
+    <div>First <span></span></div>
+    <div>Second <span></span></div>
+    <div>Third <span></span></div>
+    <div>Fourth <span></span></div>
+
+    <div id="id1" class="style1">
+        <span></span>
+        This is div1
+    </div>
+
+    <div id="id2">
+        <div></div>
+        This is div2
+    </div>
+
+    <div class="div1">
+        This is 1st of class div1
+    </div>
+
+    <div class="div1">
+        This is 2nd of class div1
+    </div>
+
+    <img id="photo1"/>
+    <img id="photo2"/>
+    <img />
+
+
+    <div>
+        <ul>
+            <li>John</li>
+            <li>Karl</li>
+            <li>Adam</li>
+        </ul>
+    </div>
+    <div>
+        <ul>
+            <li>Dan</li>
+        </ul>
+    </div>
+    <div>
+        <ul>
+            <li>Dave</li>
+            <li>Rick</li>
+            <li>Timmy</li>
+            <li>Gibson</li>
+        </ul>
+    </div>
+</body>
+</html>

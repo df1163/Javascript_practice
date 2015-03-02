@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body{
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-flow: column;
+        }
+
+        .progress{
+            width: 30%;
+            height: 10px;
+            background-color: aliceblue;
+            border-radius: 50px;
+        }
+
+        .progress > div{
+            width: 0 ;
+            height: 100%;
+            background-color: blue;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('submitGet').addEventListener('click',function(){
+                var inputUrl = document.getElementById('inputGetUrl');
+                var url = inputUrl.value;
+                //var url = "CSS.pdf";
+
+                /* 'http://uitr.herokuapp.com/countries'; */
+                /* 'https://api.github.com/search/repositories?q=nodejs' */
+
+                makeGetAjaxCall(url,function(xhr){
+                    console.log('CALL BACK AJAX GET FUNCTIONS:')
+                    console.log(xhr);
+                    console.log('TEST IF BROWER SUPPORT EVENT');
+                    if('onprogress' in  (new XMLHttpRequest())){
+                        console.log('Progress is supported');
+                    }
+                });
+            });
+
+            document.getElementById('submitPost').addEventListener('click',function(){
+                var data = document.getElementById('inputPostUrl');
+                var url = 'https://api.github.com/search/repositories';
+
+                var obj = {q:data.value};
+
+                makePostAjaxCall(url,obj,function(xhr){
+                    console.log('CALL BACK AJAX POST FUNCTIONS');
+                });
+            });
+
+            document.getElementById('submitFile').addEventListener('click',function(){
+
+                var inputFile = document.getElementById('inputFile');
+                var files = inputFile.files;
+                console.log(files.length);
+                console.log(Object.getOwnPropertyNames(files).length);
+                var dataurls = [];
+
+                var div_uploads = document.getElementById('uploads');
+                /* if implement var each in files: 3 more attr arises which are item, @@iterator, length */
+                for(var i = 0; i < files.length; i++){
+
+                    var file = files[i];
+                    console.log('**********************************************************');
+                    console.log('file.type: ' + file.type);
+                    console.log('file.name: ' + file.name);
+                    console.log('file.size: ' + file.size);
+
+                    var filereader = new FileReader();
+
+                    filereader.dom_container = createDisplay(div_uploads);
+
+                    filereader.addEventListener('progress',function(e){
+                        if(e.lengthComputable){
+                            this.dom_container.firstElementChild.value = e.loaded / e.total * 100;
+                        }
+                    });
+
+                    filereader.addEventListener('loadend',function(){
+                        this.dom_container.lastElementChild.src = this.result;
+                        dataurls.push(this.result);
+                    });
+                    filereader.readAsDataURL(file);
+                    console.log('**********************************************************');
+                }
+            });
+        });
+
+        function makePostAjaxCall(url,data,callback){
+            var xhr = new XMLHttpRequest();
+            xhr.addEventListener('readystatechange',function(){
+                if(xhr.readyState === 4 && xhr.status ===200){
+                    console.log('xhr.responseText: ' + xhr.responseText);
+                }
+            });
+            xhr.open('POST',url);
+            xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+            var encodedForm = encodedFormData(data);
+            console.log(data);
+            console.log(encodedForm);
+            xhr.send(encodedForm);
+        }
+
+        function makeGetAjaxCall(url,callback){
+
+            var xhr = new XMLHttpRequest();
+            var req3 = 0;
+
+            xhr.addEventListener('readystatechange',function(){
+                console.log('readyState :' + xhr.readyState + ' , status: '  + xhr.status);
+                console.log('statusText: ' + xhr.statusText);
+                console.log('type: ' + xhr.getResponseHeader('Content-Type'));
+
+                console.log('response text: ' + xhr.responseText.length);
+                console.log('Type: ' + xhr.responseType);
+                console.log('XML:' + xhr.responseXML);
+
+                if(xhr.readyState === 2 && xhr.status === 200){
+
+                }
+
+                if(xhr.readyState === 3){
+                    req3++;
+                    console.log('header Length:' + xhr.getAllResponseHeaders().length);
+                    var headers = xhr.getAllResponseHeaders();
+                    var text = xhr.responseText;
+                    //console.log(text);
+                    //console.log(text);
+                    console.log('***********************head starts ');
+                    var header = headers.split('\n');
+
+                    for(var i = 0;i < header.length;i++){
+                        console.log(header[i]);
+                    }
+                    console.log(headers);
+
+                    console.log(xhr.getResponseHeader('Content-Length'));
+                    console.log('***********************head ends');
+                }
+
+                if(xhr.readyState === 4 && xhr.status === 200){
+                    console.log('req3************' + req3);
+                    callback(xhr.responseText);
+                }
+                console.log('***');
+            });
+
+            xhr.addEventListener('progress',function(e){
+                var container = document.getElementsByClassName('progress')[0];
+                var progress = container.getElementsByTagName('div')[0];
+
+                progress.style.width = e.loaded / e.total * 100 + '%';
+
+                /*console.log('progress change');
+                 console.log(e.loaded);
+                 console.log(e.total);
+                 console.log('#######');*/
+            });
+            /*  xhr.open('GET','http://www.nyu.edu') or google, Error arise:
+             Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote
+             resource at http://www.nyu.edu/. This can be fixed by moving the resource to the
+             same domain or enabling CORS. */
+            /*
+             xhr.open('GET','CSS.pdf',false);
+             The last length of segment of file:
+             console.log(xhr.responseText.length);
+             */
+            /*xhr.open('GET','CSS.pdf');*/
+            xhr.open('GET',url);
+            xhr.send();
+        }
+
+        function encodedFormData(data){
+            if(!data){
+                return ";"
+            }
+            var pairs = [];
+            for (var name in data){
+                if(!data.hasOwnProperty(name)){
+                    continue;
+                }
+                if(typeof data[name] === "function"){
+                    console.log("Type of Data " +typeof data[name]);
+                    continue;
+                }
+                var value = data[name].toString();/*
+                console.log('Data names ' + data[name]);
+                name = encodeURIComponent(name.replace("","+"));*/
+                console.log('encodeURIComponent Name ' + name);
+                /*value = encodeURIComponent(value.replace("","+"));
+                console.log('encodeURIComponent Value ' + value);*/
+                pairs.push(name+"="+value);
+            }
+            return pairs.join('&');
+        }
+
+        function createDisplay(parent){
+            var div_file = createElement('div','','file',parent);
+
+            var progress = createElement('progress','','',div_file,{
+                max:100,
+                value:0
+            });
+
+            var img = createElement('img','','',div_file);
+            return div_file;
+        }
+
+        function createElement(type,innerHTML,className,parent,attrs){
+            var elememt = document.createElement(type);
+            elememt.innerHTML = innerHTML;
+            elememt.className = className;
+
+            if(typeof parent !== 'undefined'){
+                parent.appendChild(elememt);
+            }
+
+            if(typeof attrs !== 'undefined'){
+                for(var attr in attrs){
+                    elememt.setAttribute(attr,attrs[attr]);
+                }
+            }
+            return elememt;
+        }
+    </script>
+</head>
+<body>
+    <code>
+        upload select(Get):
+    </code>
+
+    <input type="text" id="inputGetUrl" multiple>
+
+    <button id="submitGet">Submit</button>
+
+    <code>
+        upload select(Post):
+    </code>
+
+    <input type="text" id="inputPostUrl" multiple>
+
+    <button id="submitPost">Submit</button>
+
+    <input type="file" id="inputFile" multiple>
+
+    <button id="submitFile">Submit File</button>
+
+    <div class="progress">
+        <div></div>
+    </div>
+
+
+    <div id="uploads">
+
+    </div>
+</body>
+</html>

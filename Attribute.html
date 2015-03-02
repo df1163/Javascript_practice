@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #id1{
+            width: 100px;
+            height: 200px;
+            background-color: red;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded',function(){
+            var image = document.images[0];
+            console.log(image.src);
+            console.log(image.style.width);
+            console.log(image.style.height);
+
+            console.log(Object.getOwnPropertyNames(image).length);
+            console.log('######################IMAGE1 ASSIGNED SIZE######################');
+
+            image.style.width = 100 + 'px';
+            image.style.height = 100 + 'px';
+            console.log(image.style.width);
+            console.log(image.style.height);
+
+            console.log('######################IMAGE2######################');
+
+            var image2 = document.images[1];
+            console.log(image2.src);
+
+            console.log('****');
+            var src = image2.getAttribute('src');
+            console.log(typeof src);
+
+            var width = image2.getAttribute('width');
+            console.log(typeof width);//object
+
+            var alt = image2.alt;
+            console.log(alt);
+
+            var alt2 = image2.getAttribute('alt');
+            console.log(alt2);
+
+            console.log('Attributes as Attr Nodes*****');
+            console.log(document.head.attributes[0]);
+            console.log(document.head.attributes['lang'].name);
+            console.log(document.head.attributes['lang'].value);
+
+            console.log('######################DIV######################');
+            var div = document.getElementById('id1');
+            /*div.style.width = 500 + 'px';
+            div.style.height = 500 + 'px';*/
+            console.log('div attr.length: ' + div.attributes.length);
+
+            var divattrlen = div.attributes.length;
+            for(var i = 0; i < divattrlen;i++){
+                console.log(div.attributes[i]);
+                console.log('***');
+            }
+
+            console.log(div.getAttribute('id'));
+        });
+
+
+    </script>
+</head>
+<body background=rgb(255,255,255)>
+    <img src="image2.jpg">
+    <img src="image2.jpg" alt="none1">
+
+    <div id="id1"></div>
+</body>
+</html>

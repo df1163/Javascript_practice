@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        console.log('**************TEST prototype***************');
+        var id1 = {
+            identifier:'id1'
+        }
+
+        console.log(Object.getPrototypeOf(id1));
+
+        var id2 = Object.create(id1);
+
+        console.log(Object.getPrototypeOf(id2));
+
+
+        console.log('**************TEST prototype inherits***************');
+        function Car() {
+            wheel = 4;
+            this.engine = '4 cylinder';
+        };
+
+        Car.wheel = 4;
+        Car.prototype.behavior = 'drive';
+        Car.prototype.brand = 'Audi';
+        Object.defineProperty(Car.prototype,'behavior',{
+            writable: false,
+            /*enumerable: false,*/
+            configurable: false
+        });
+
+        var Car1 = Object.create(Car);
+        var Car2 = new Car();
+
+        console.log('Prototype of Car1 prototype: ' + Object.getPrototypeOf(Object.getPrototypeOf(Car1)));
+        console.log('Car1 prototype: ' + Object.getPrototypeOf(Car1));
+        console.log(Car1);
+        console.log('TEST INSTANCE: ');
+        console.log('Car1 instanceof Function: ' + (Car1 instanceof Function));
+        console.log('Car1 instanceof Object: ' + (Car1 instanceof Object));
+        console.log('Car1.wheel: ' + Car1.wheel);
+        console.log('Car.wheel: ' + Car.wheel);
+        console.log('Car behavior: ' + Car.behavior);
+        console.log('Car brand: ' + Car.brand);
+        console.log('Car2 prototype: ' + Object.getPrototypeOf(Car2));
+        console.log('Car2 instanceof Object: ' + (Car2 instanceof Object));
+        console.log('Car2 instanceof Function: ' + (Car2 instanceof Function));
+        console.log(Car2);
+
+        /* Reports Error
+        var i = 1;
+        console.log('i prototype: ' + Object.getPrototypeOf(i));
+        */
+
+        console.log('**************TEST FUNCTIONS***************');
+        var calculator = {
+            val: 10,
+            add: function (x, y) {
+                return this.val + x + y;
+            },
+            toString: function () {
+                return this.val.toString();
+            }
+        };
+
+        console.log('Got NaN if number of arguments does not match: ' + calculator.add(10));
+        console.log('Only when result matches: ' + calculator.add(1,1));
+        console.log('typeof calculator.add: ' + typeof calculator.add);
+        console.log('Object.getPrototypeOf(calculator.add): ' + Object.getPrototypeOf(calculator.add));
+    </script>
+</head>
+<body>
+
+</body>
+</html>

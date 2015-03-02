@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #container{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+            min-width: 300px;
+            border: solid 2px black;
+        }
+
+        #container > div{
+            min-height: 100px;
+            min-width: 100px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"><div></div></div>
+
+    <form name="shipping">
+        <fieldset>
+            <legend>Shipping Method</legend>
+            <label><input type="radio" name="method" value="7days">7-days</label>
+            <label><input type="radio" name="method" value="1st">First-class</label>
+            <label><input type="radio" name="method" value="2day">2-day Air</label>
+            <label><input type="radio" name="method" value="overnite">Overnight</label>
+        </fieldset>
+    </form>
+
+    <form name="goods">
+        <fieldset>
+            <legend>Shipping Method</legend>
+            <label><input type="radio" name="retail" value="Food">Food</label>
+            <label><input type="radio" name="retail" value="Clothes">Clothes</label>
+            <label><input type="radio" name="retail" value="Electronic">Electronic</label>
+        </fieldset>
+    </form>
+
+    <script>
+        console.log('window.innerWidth: ' + window.innerWidth);
+        console.log('window.innerHeight: ' + window.innerHeight);
+
+        console.log('window.pageXOffset: ' + window.pageXOffset);
+        console.log('window.pageYOffset: ' + window.pageYOffset);
+
+        var div = document.getElementsByTagName('div')[0];
+        var rect = div.getBoundingClientRect();
+        console.log(rect.left);
+        console.log(rect.top);
+        console.log(rect.height);
+        console.log(rect.width);
+        console.log(div.offsetLeft);
+        console.log(div.offsetTop);
+
+        console.log('methods.length*********');
+        var methods = document.forms.shipping.method;
+        var retail = document.forms.goods.retail;
+        console.log(methods.length);
+        console.log(retail.length);
+    </script>
+</body>
+</html>

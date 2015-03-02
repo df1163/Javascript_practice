@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        p {
+            margin-left: 10px;
+        }
+
+        div {
+            background: #de9a44;
+            margin: 3px;
+            width: 80px;
+            height: 40px;
+            display: none;
+            float: left;
+        }
+        div.newcolor {
+            background: blue;
+        }
+
+    </style>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script>
+        $(function () {
+            $( "p:last" ).offset({ top: 10, left: 30 });
+            var pFirst = $( "p:first" );
+            /* 1 position absolute covers 2nd paragraph while relative not, but works for offset setting. why?
+            *  2 3 heighte made no difference.*/
+            /*pFirst.css({
+                'left': '300px',
+                'top': '200px'
+            });
+
+            pFirst.offset({
+                top:200,left:500
+            });*/
+
+            console.log(pFirst.height());
+            console.log(pFirst.innerHeight());
+            console.log(pFirst.outerHeight());
+
+            console.log(pFirst.width());
+            console.log(pFirst.innerWidth());
+            console.log(pFirst.outerWidth());
+
+            console.log(pFirst.position());
+            console.log(pFirst.scrollTop());
+
+
+            /*
+            var div = $( "div");
+            div.css('display','block');
+            div
+                    .animate({ left: "+=1000" }, 4000)
+                    .slideDown(400);*/
+
+            /*$( document.body ).click(function () {
+                if ( $( "div:first" ).is( ":hidden" ) ) {
+                    $( "div" ).slideDown( "slow" );
+                } else {
+                    $( "div" ).hide();
+                }
+
+            });*/
+
+
+            $( "#div" ).click(function() {
+                $( this ).css({
+                    borderStyle: "inset",
+                    cursor: "wait"
+                });
+                $( "input" ).slideDown( 7000, function() {
+                    $( this )
+                            .css( "border", "2px red inset" )
+                            .filter( ".middle" )
+                            .css( "background", "yellow" )
+                            .focus();
+                    /*$( "div" ).css( "visibility", "hidden" );*/
+                });
+            });
+            var div = $('div');
+
+            function runIt() {
+                div
+                            .show( "slow" )
+                            .animate({ left: "+=200" }, 2000 )
+                            /*.slideToggle( 1000 )
+                            .slideToggle( "fast" )*/
+                            .animate({ left: "-=200" }, 1500 )
+                            /*.hide( "slow" )
+                            .show( 1200 )*/
+                            .slideUp( "normal", runIt );
+             }
+
+            function showIt() {
+                var n = div.queue();
+                $( "span" ).text( n.length );
+                setTimeout( showIt, 100 );
+            }
+
+            runIt();
+            showIt();
+        });
+
+    </script>
+</head>
+<body>
+    <!--Click me!
+    <div></div>
+    <div></div>
+    <div></div>-->
+
+    <p id="id1">Hello</p>
+    <p>2nd Paragraph</p>
+    <p>The queue length is: <span></span></p>
+    <div></div>
+
+
+    <!--<div id="div">Push!</div>
+    <input type="text">
+    <input type="text" class="middle">
+    <input type="text">-->
+</body>
+</html>

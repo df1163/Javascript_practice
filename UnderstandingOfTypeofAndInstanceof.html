@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script>
+        $(function () {
+            $.get('https://api.github.com/search/repositories?q=nodejs&sort=stars&sort=desc',function(data){
+
+                var objs = data['items'];
+
+                for(var prop in objs){
+                    console.log(prop);
+                    console.log(objs[prop]);
+                    console.log('#################');
+                }
+
+                function testFunctionWithoutReturnValues(){
+                    console.log('testFunctionWithoutReturnValues');
+                }
+
+
+                function testFunctionWithReturnValues(){
+                    console.log('testFunctionWithReturnValues');
+                    return 1;
+                }
+                console.log('testFunctionWithoutReturnValues FUNCTION: ' + ( testFunctionWithoutReturnValues() == undefined))
+                console.log('testFunctionWithReturnValues FUNCTION: ' + ( testFunctionWithReturnValues() == undefined))
+                console.log(typeof objs);
+                console.log(objs instanceof Array);
+                /*console.log(objs.isArray); //wrong syntax*/
+                console.log(Array.isArray(objs));
+
+                var divs = document.getElementsByTagName('div');
+                console.log(divs instanceof HTMLCollection);
+            });
+        });
+    </script>
+</head>
+<body>
+    <div>id1</div>
+    <div>id2</div>
+    <div>id3</div>
+</body>
+</html>

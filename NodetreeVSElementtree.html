@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+</head>
+
+
+<body>
+    div0
+    <div>
+        test
+    </div>
+    div1
+    <div>
+        test4
+        <div>
+            test2
+        </div>
+        test3
+    </div>
+    <script>
+        var len = document.childNodes.length;
+
+        var node0 = document.childNodes[0];
+
+        console.log(node0);
+
+        var node1 = document.childNodes[1];
+
+        console.log(len);
+
+        var node = document.childNodes;
+
+        console.log(typeof node);
+        console.log(node);
+
+        console.log('node children***************');
+        console.log('node length: ' + node.length);
+
+        for(var eachChild in node){
+            console.log(node[eachChild]);
+            console.log('***');
+        }
+
+        console.log('body children***************');
+        var len = document.body.childNodes.length;
+
+        var bodyChildren = document.body.childNodes;
+        console.log(len);
+
+        for(var i = 0;i < len;i++){
+            console.log(bodyChildren[i].nodeName);
+            if(bodyChildren[i].nodeName === '#text'){
+                console.log(bodyChildren[i].nodeValue);
+            }
+            console.log('***');
+
+        }
+
+        var div = document.head.firstChild;
+
+        console.log('try last Div***********');
+
+        var lastNode = document.body.childNodes[3];
+
+        console.log(lastNode.nodeName);
+        console.log(lastNode.nodeType);
+        console.log(lastNode.nodeValue);
+
+        console.log('length of last div element is: ' + lastNode.childNodes.length);
+        var lastDiv = lastNode.childNodes;
+
+        for(var i = 0;i < lastDiv.length;i++){
+            /*console.log(lastNode[i]);*/
+
+            if(lastDiv[i].nodeType === 1){
+                console.log('node '+i +' is element node, the content is: ' + lastDiv[i]);
+            }
+
+            else{
+                console.log('node '+i +' isnt an element node, the content is: ' + lastDiv[i] + ', node type is:'
+                    + lastDiv[i].nodeType + ', node value' +lastDiv[i].nodeValue);
+            }
+        }
+
+        console.log('try div***********');
+        console.log(div.nodeValue);
+        console.log(div.nodeName);
+    </script>
+</body>
+</html>
